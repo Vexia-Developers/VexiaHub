@@ -8,7 +8,6 @@ import fr.vexia.api.servers.GameType;
 import fr.vexia.core.items.ItemBuilder;
 import fr.vexia.hub.VexiaHub;
 import fr.vexia.hub.gui.GUIManager;
-import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -44,7 +43,8 @@ public class MainGUI implements InventoryProvider {
 
     @Override
     public void update(Player player, InventoryContents contents) {
-        contents.set(1, 4, ClickableItem.of(getGameItem(GameItems.RTF), event -> openGameMenu(player, GameType.RTF)));
+        contents.set(1, 4, ClickableItem.of(getGameItem(GameItems.ISLANDFLAG), event -> openGameMenu(player, GameType.ISLANDFLAG)));
+        contents.set(1, 4, ClickableItem.of(getGameItem(GameItems.ISLANDFLAG), event -> openGameMenu(player, GameType.ISLANDFLAG)));
     }
 
     private void openGameMenu(Player player, GameType gameType) {
@@ -58,7 +58,7 @@ public class MainGUI implements InventoryProvider {
     private ItemStack getGameItem(GameItems gameItems) {
         ItemBuilder itemBuilder = gameItems.getItem();
         int playersPlaying = ServerManager.getOnlines(gameItems.getGameType());
-        itemBuilder.addLoreLine("§eIl y a §6" + playersPlaying + " §ejoueur"+(playersPlaying > 1 ? "s" : "")+" dans ce mode.");
+        itemBuilder.addLoreLine("§eIl y a §6" + playersPlaying + " §ejoueur" + (playersPlaying > 1 ? "s" : "") + " dans ce mode.");
         return itemBuilder.toItemStack();
     }
 }

@@ -10,8 +10,9 @@ import java.util.stream.Collectors;
 
 public enum GameItems {
 
-    RTF(Material.WOOL, GameType.RTF, "Vous êtes téléporté sur votre base dans une partie continue." +
-            "Votre mission est de capturer le drapeau de l'équipe adverse afin de le déposer en dessous du votre. \n§a");
+    ISLANDFLAG(Material.WOOL, GameType.ISLANDFLAG, "Vous êtes téléporté sur votre base dans une partie continue." +
+            "Votre mission est de capturer le drapeau de l'équipe adverse afin de le déposer en dessous du votre. \n§a"),
+    RUSHBOX(Material.GOLD_SWORD, GameType.RUSHBOX, "Description...");
 
     private final Material material;
     private final GameType gameType;
