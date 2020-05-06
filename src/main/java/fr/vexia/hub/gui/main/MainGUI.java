@@ -44,7 +44,7 @@ public class MainGUI implements InventoryProvider {
     @Override
     public void update(Player player, InventoryContents contents) {
         contents.set(1, 4, ClickableItem.of(getGameItem(GameItems.ISLANDFLAG), event -> openGameMenu(player, GameType.ISLANDFLAG)));
-        contents.set(1, 4, ClickableItem.of(getGameItem(GameItems.ISLANDFLAG), event -> openGameMenu(player, GameType.ISLANDFLAG)));
+        contents.set(1, 5, ClickableItem.of(getGameItem(GameItems.RUSHBOX), event -> openGameMenu(player, GameType.RUSHBOX)));
     }
 
     private void openGameMenu(Player player, GameType gameType) {
