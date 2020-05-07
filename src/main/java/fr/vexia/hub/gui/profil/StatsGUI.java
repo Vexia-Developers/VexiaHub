@@ -63,9 +63,13 @@ public class StatsGUI implements InventoryProvider {
 
     private void changeGame(GameItems gameItems, Player player, InventoryContents contents) {
         contents.fillRow(2, ClickableItem.empty(new ItemStack(Material.AIR)));
+        
         for (ClickableItem[] row : contents.all()) {
             for (ClickableItem column : row) {
-                System.out.println("column: " + column);
+                if (column == null) {
+                    continue;
+                }
+
                 ItemStack item = column.getItem();
                 if (item.containsEnchantment(Enchantment.ARROW_INFINITE) && item.getType() != gameItems.getMaterial()) {
                     item.removeEnchantment(Enchantment.ARROW_INFINITE);
