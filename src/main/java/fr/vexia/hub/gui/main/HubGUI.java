@@ -32,7 +32,7 @@ public class HubGUI implements InventoryProvider {
         return new ItemBuilder(Material.STAINED_CLAY)
                 .setDyeColor(server != null ? DyeColor.LIME : DyeColor.RED)
                 .setName("§6" + name)
-                .setLore(" ", "§7Il y a §6" + server.getOnline() + " §7joueur(s) dans ce hub")
+                .setLore(" ", server == null ? "§cEteint" : "§7Il y a §6" + server.getOnline() + " §7joueur(s) dans ce hub")
                 .toItemStack();
 
     }
