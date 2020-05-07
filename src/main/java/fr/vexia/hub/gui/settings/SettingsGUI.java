@@ -71,7 +71,7 @@ public class SettingsGUI implements InventoryProvider {
     private void changeOption(InventoryClickEvent event, Option option, VexiaPlayer vexiaPlayer) {
         Option.OptionValue value = event.getClick() == ClickType.LEFT ? Option.OptionValue.ON :
                 (event.getClick() == ClickType.MIDDLE ? Option.OptionValue.FRIENDS : Option.OptionValue.OFF);
-        if (value == Option.OptionValue.FRIENDS && !option.isAllowFriends()) {
+        if ((value == Option.OptionValue.FRIENDS && !option.isAllowFriends()) || vexiaPlayer.getOption(option) == value) {
             return;
         }
 
