@@ -7,8 +7,8 @@ import org.bukkit.World;
 
 public class WorldManager {
 
-    private static final double[] SPAWN_LOCATION = new double[]{-905.5, 32.5, -915.5, 180, 0};
-    private static final double[] JUMP_LOCATION = new double[]{-905.5, 155.5, -915.5};
+    private static final double[] SPAWN_LOCATION = new double[]{-862.5, 22.0, 885.5, 0, 0};
+    private static final double[] JUMP_LOCATION = new double[]{-862.5, 90.0, 885.5, 0, 0};
 
     private final Location spawnLocation;
     private final Location jumpLocation;
