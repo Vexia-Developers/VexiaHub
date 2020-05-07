@@ -12,8 +12,7 @@ repositories {
 
 dependencies {
     implementation project(path: ':VexiaAPI')
-    implementation 'org.spigotmc:spigot:1.8.8-R0.1-SNAPSHOT'
-    compile 'fr.mrmicky:FastBoard:1.1.0'
+    implementation 'org.spigotmc:spigot:1.12.2-R0.1-SNAPSHOT'
     compile 'fr.minuskube.inv:smart-invs:1.2.7'
 }
 

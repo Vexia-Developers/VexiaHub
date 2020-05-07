@@ -29,7 +29,7 @@ public class FlyListener implements Listener {
             player.setFlying(false);
             player.setAllowFlight(false);
             event.setCancelled(true);
-            player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 50, 50);
+            player.playSound(player.getLocation(), Sound.ENTITY_BAT_TAKEOFF, 50, 50);
             player.setVelocity(player.getLocation().getDirection().multiply(3).setY(1.5));
             doubleJump.add(player);
         } else {

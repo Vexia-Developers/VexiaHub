@@ -1,10 +1,10 @@
 package fr.vexia.hub;
 
-import fr.mrmicky.fastboard.FastBoard;
 import fr.vexia.api.data.manager.PlayerManager;
 import fr.vexia.api.servers.ServerType;
 import fr.vexia.api.servers.VexiaServer;
 import fr.vexia.core.VexiaPlugin;
+import fr.vexia.core.scoreboard.FastBoard;
 import fr.vexia.core.scoreboard.TeamsTagsManager;
 import fr.vexia.hub.gui.GUIManager;
 import fr.vexia.hub.listeners.FlyListener;
