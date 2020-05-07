@@ -13,8 +13,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.List;
-
 public class HubGUI implements InventoryProvider {
     @Override
     public void init(Player player, InventoryContents contents) {
@@ -33,7 +31,7 @@ public class HubGUI implements InventoryProvider {
     private ItemStack getItem(VexiaServer server, String name) {
         return new ItemBuilder(Material.STAINED_CLAY)
                 .setDyeColor(server != null ? DyeColor.LIME : DyeColor.RED)
-                .setName("§6"+server.getName())
+                .setName("§6" + name)
                 .setLore(" ", "§7Il y a §6" + server.getOnline() + " §7joueur(s) dans ce hub")
                 .toItemStack();
 
