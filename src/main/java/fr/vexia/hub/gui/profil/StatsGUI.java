@@ -7,12 +7,14 @@ import fr.vexia.api.data.manager.StatsManager;
 import fr.vexia.api.stats.Statistic;
 import fr.vexia.api.stats.StatsType;
 import fr.vexia.core.items.ItemBuilder;
+import fr.vexia.core.scoreboard.FastBoard;
 import fr.vexia.hub.gui.main.GameItems;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class StatsGUI implements InventoryProvider {
 
@@ -21,19 +23,20 @@ public class StatsGUI implements InventoryProvider {
         contents.fillRow(1, ClickableItem.of(new ItemBuilder(Material.STAINED_GLASS_PANE).setDyeColor(DyeColor.ORANGE).setName(" ")
                 .toItemStack(), event -> event.setCancelled(true)));
 
-        GameItems firstGame = GameItems.values()[0];
-        contents.set(0, 0, ClickableItem.of(new ItemBuilder(firstGame.getMaterial())
-                .setName("§6" + firstGame.getGameType().getName())
-                .setLore(firstGame.getLores())
-                .addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1)
-                .toItemStack(), this::changeGame));
+        GameItems[] gameItems = GameItems.values();
 
-        Statistic statistic = StatsManager.getStatistic(player.getUniqueId(), firstGame.getGameType());
-        StatsType[] statisticTypes = statistic.getGameType().getStatsTypes();
-        for (int i = 0; i < statisticTypes.length; i++) {
-            StatsType statisticType = statisticTypes[i];
-            contents.set(2, i, getItem(statisticType, statistic.get(statisticType)));
+        for (int i = 0; i < gameItems.length; i++) {
+            GameItems gameItem = gameItems[i];
+            ItemBuilder itemBuilder = new ItemBuilder(gameItem.getMaterial())
+                    .setName("§6" + gameItem.getGameType().getName())
+                    .setLore(gameItem.getLores());
+            if(i == 0) {
+                itemBuilder.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+            }
+            contents.set(0, i, ClickableItem.of(itemBuilder.toItemStack(), event -> changeGame(gameItem, player, contents)));
         }
+
+        changeGame(gameItems[0], player, contents);
     }
 
     private ClickableItem getItem(StatsType statsType, int value) {
@@ -60,8 +63,13 @@ public class StatsGUI implements InventoryProvider {
         return ClickableItem.of(itemBuilder.toItemStack(), event -> event.setCancelled(true));
     }
 
-    private void changeGame(InventoryClickEvent event) {
-
+    private void changeGame(GameItems gameItems, Player player, InventoryContents contents) {
+        Statistic statistic = StatsManager.getStatistic(player.getUniqueId(), gameItems.getGameType());
+        StatsType[] statisticTypes = statistic.getGameType().getStatsTypes();
+        for (int i = 0; i < statisticTypes.length; i++) {
+            StatsType statisticType = statisticTypes[i];
+            contents.set(2, i, getItem(statisticType, statistic.get(statisticType)));
+        }
     }
 
     @Override
