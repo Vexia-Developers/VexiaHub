@@ -61,9 +61,10 @@ public class StatsGUI implements InventoryProvider {
         return ClickableItem.of(itemBuilder.toItemStack(), event -> event.setCancelled(true));
     }
 
+    // TODO: Verify old choice to prevent sql request spam
     private void changeGame(GameItems gameItems, Player player, InventoryContents contents) {
         contents.fillRow(2, ClickableItem.empty(new ItemStack(Material.AIR)));
-        
+
         for (ClickableItem[] row : contents.all()) {
             for (ClickableItem column : row) {
                 if (column == null) {
