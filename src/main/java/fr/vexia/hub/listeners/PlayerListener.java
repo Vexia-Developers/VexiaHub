@@ -25,13 +25,13 @@ public class PlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         event.setJoinMessage(null);
         Player player = event.getPlayer();
-        VexiaPlayer account = PlayerManager.get(player.getUniqueId());
         VexiaHub hub = VexiaHub.getInstance();
 
         player.teleport(hub.getWorldManager().getSpawnLocation());
         PlayerUtils.reset(player);
-        giveItem(account, player.getInventory());
+        giveItem(player, player.getInventory());
 
+        VexiaPlayer account = PlayerManager.get(player.getUniqueId());
         String teamName = account.getRank().getTab() + "/" + account.getName().substring(0, 5) + "-" + account.getUUID().toString().substring(0, 5);
         TeamsTagsManager team = new TeamsTagsManager(teamName,
                 account.getRank().getColoredPrefix() + " ", null,
@@ -84,11 +84,11 @@ public class PlayerListener implements Listener {
         player.setAllowFlight(false);
     }
 
-    private void giveItem(VexiaPlayer account, PlayerInventory inventory) {
+    private void giveItem(Player player, PlayerInventory inventory) {
         inventory.clear();
         inventory.setItem(0, new ItemBuilder(Material.COMPASS).setName("§6Menu Principal §7(Clic-droit)")
                 .setLore("§7Accéder au menu principal", "§7pour rejoindre les jeux").toItemStack());
-        ItemStack skull = new ItemBuilder(Material.SKULL_ITEM, 1, (byte) 3).setSkullOwner(account.getName())
+        ItemStack skull = new ItemBuilder(Material.SKULL_ITEM, 1, (byte) 3).setSkullOwner(player.getName())
                 .setName("§6Profil §7(Clic-droit)")
                 .setLore("§7Voir ton profil avec tes", "§7informations et statistiques").toItemStack();
         inventory.setItem(4, CraftItemStack.asBukkitCopy(CraftItemStack.asNMSCopy(skull)));
