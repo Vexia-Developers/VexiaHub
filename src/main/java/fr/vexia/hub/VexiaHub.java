@@ -15,7 +15,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.UUID;
 
 public class VexiaHub extends VexiaPlugin {
