@@ -7,7 +7,6 @@ import fr.vexia.api.data.manager.StatsManager;
 import fr.vexia.api.stats.Statistic;
 import fr.vexia.api.stats.StatsType;
 import fr.vexia.core.items.ItemBuilder;
-import fr.vexia.core.scoreboard.FastBoard;
 import fr.vexia.hub.gui.main.GameItems;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -33,10 +32,10 @@ public class StatsGUI implements InventoryProvider {
             if(i == 0) {
                 itemBuilder.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
             }
-            contents.set(0, i, ClickableItem.of(itemBuilder.toItemStack(), event -> changeGame(gameItem, player, contents)));
+            contents.set(0, i, ClickableItem.of(itemBuilder.toItemStack(), event -> changeGame(gameItem, player, contents, event)));
         }
 
-        changeGame(gameItems[0], player, contents);
+        changeGame(gameItems[0], player, contents, event);
     }
 
     private ClickableItem getItem(StatsType statsType, int value) {
@@ -63,7 +62,19 @@ public class StatsGUI implements InventoryProvider {
         return ClickableItem.of(itemBuilder.toItemStack(), event -> event.setCancelled(true));
     }
 
-    private void changeGame(GameItems gameItems, Player player, InventoryContents contents) {
+    private void changeGame(GameItems gameItems, Player player, InventoryContents contents, InventoryClickEvent event) {
+        contents.fillRow(2, ClickableItem.empty(new ItemStack(Material.AIR)));
+        for (ClickableItem[] row : contents.all()) {
+            for (ClickableItem column : row) {
+                ItemStack item = column.getItem();
+                if(item.containsEnchantment(Enchantment.ARROW_INFINITE) && item.getType() != gameItems.getMaterial()) {
+                    item.removeEnchantment(Enchantment.ARROW_INFINITE);
+                } else if(item.getType() == gameItems.getMaterial()) {
+                    item.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
+                }
+            }
+        }
+        
         Statistic statistic = StatsManager.getStatistic(player.getUniqueId(), gameItems.getGameType());
         StatsType[] statisticTypes = statistic.getGameType().getStatsTypes();
         for (int i = 0; i < statisticTypes.length; i++) {
