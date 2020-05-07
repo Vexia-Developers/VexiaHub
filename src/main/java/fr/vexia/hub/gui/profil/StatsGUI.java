@@ -28,7 +28,7 @@ public class StatsGUI implements InventoryProvider {
             ItemBuilder itemBuilder = new ItemBuilder(gameItem.getMaterial())
                     .setName("§6" + gameItem.getGameType().getName())
                     .setLore(gameItem.getLores());
-            if(i == 0) {
+            if (i == 0) {
                 itemBuilder.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
             }
             contents.set(0, i, ClickableItem.of(itemBuilder.toItemStack(), event -> changeGame(gameItem, player, contents)));
@@ -65,10 +65,11 @@ public class StatsGUI implements InventoryProvider {
         contents.fillRow(2, ClickableItem.empty(new ItemStack(Material.AIR)));
         for (ClickableItem[] row : contents.all()) {
             for (ClickableItem column : row) {
+                System.out.println("column: " + column);
                 ItemStack item = column.getItem();
-                if(item.containsEnchantment(Enchantment.ARROW_INFINITE) && item.getType() != gameItems.getMaterial()) {
+                if (item.containsEnchantment(Enchantment.ARROW_INFINITE) && item.getType() != gameItems.getMaterial()) {
                     item.removeEnchantment(Enchantment.ARROW_INFINITE);
-                } else if(item.getType() == gameItems.getMaterial()) {
+                } else if (item.getType() == gameItems.getMaterial()) {
                     item.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
                 }
             }
