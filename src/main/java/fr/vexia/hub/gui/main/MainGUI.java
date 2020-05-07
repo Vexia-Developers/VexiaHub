@@ -43,7 +43,7 @@ public class MainGUI implements InventoryProvider {
         contents.set(1, 3, ClickableItem.of(getGameItem(GameItems.ISLANDFLAG), event -> openGameMenu(player, GameType.ISLANDFLAG)));
         contents.set(1, 5, ClickableItem.of(getGameItem(GameItems.RUSHBOX), event -> openGameMenu(player, GameType.RUSHBOX)));
 
-        contents.set(4, 0, ClickableItem.of(getHubItem(), event -> guiManager.getHubMenu().open(player)));
+        contents.set(4, 8, ClickableItem.of(getHubItem(), event -> guiManager.getHubMenu().open(player)));
     }
 
     private void openGameMenu(Player player, GameType gameType) {
