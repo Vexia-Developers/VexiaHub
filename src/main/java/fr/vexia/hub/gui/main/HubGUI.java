@@ -26,11 +26,11 @@ public class HubGUI implements InventoryProvider {
     public void update(Player player, InventoryContents contents) {
         VexiaServer hub01 = ServerManager.get("hub01");
         VexiaServer hub02 = ServerManager.get("hub02");
-        contents.set(0, 0, ClickableItem.of(getItem(hub01), event -> PlayerUtils.teleportServer(VexiaHub.getInstance(), player, hub01.getName())));
-        contents.set(0, 1, ClickableItem.of(getItem(hub02), event -> PlayerUtils.teleportServer(VexiaHub.getInstance(), player, hub02.getName())));
+        contents.set(0, 0, ClickableItem.of(getItem(hub01, "hub01"), event -> PlayerUtils.teleportServer(VexiaHub.getInstance(), player, hub01.getName())));
+        contents.set(0, 1, ClickableItem.of(getItem(hub02, "hub02"), event -> PlayerUtils.teleportServer(VexiaHub.getInstance(), player, hub02.getName())));
     }
 
-    private ItemStack getItem(VexiaServer server) {
+    private ItemStack getItem(VexiaServer server, String name) {
         return new ItemBuilder(Material.STAINED_CLAY)
                 .setDyeColor(server != null ? DyeColor.LIME : DyeColor.RED)
                 .setName("§6"+server.getName())
