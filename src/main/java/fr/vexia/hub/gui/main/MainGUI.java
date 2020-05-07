@@ -28,23 +28,22 @@ public class MainGUI implements InventoryProvider {
                 .setDyeColor(DyeColor.ORANGE)
                 .toItemStack(), event -> event.setCancelled(true)));
 
-        contents.set(4, 0, ClickableItem.of(new ItemBuilder(Material.BED)
-                .setName("§6§lSpawn")
-                .toItemStack(), event -> player.teleport(VexiaHub.getInstance().getWorldManager().getSpawnLocation())));
+        contents.set(4, 0, ClickableItem.of(new ItemBuilder(Material.FEATHER)
+                .setName("§6Jump")
+                .toItemStack(), event -> player.teleport(VexiaHub.getInstance().getWorldManager().getJumpLocation())));
 
         contents.set(4, 4, ClickableItem.of(new ItemBuilder(Material.COMMAND)
                 .setName("§6Hosts")
                 .toItemStack(), event -> openHostMenu(player)));
 
-        contents.set(4, 8, ClickableItem.of(new ItemBuilder(Material.FEATHER)
-                .setName("§6Jump")
-                .toItemStack(), event -> player.teleport(VexiaHub.getInstance().getWorldManager().getJumpLocation())));
     }
 
     @Override
     public void update(Player player, InventoryContents contents) {
-        contents.set(1, 4, ClickableItem.of(getGameItem(GameItems.ISLANDFLAG), event -> openGameMenu(player, GameType.ISLANDFLAG)));
+        contents.set(1, 3, ClickableItem.of(getGameItem(GameItems.ISLANDFLAG), event -> openGameMenu(player, GameType.ISLANDFLAG)));
         contents.set(1, 5, ClickableItem.of(getGameItem(GameItems.RUSHBOX), event -> openGameMenu(player, GameType.RUSHBOX)));
+
+        contents.set(4, 0, ClickableItem.of(getHubItem(), event -> guiManager.getHubMenu().open(player)));
     }
 
     private void openGameMenu(Player player, GameType gameType) {
@@ -53,6 +52,13 @@ public class MainGUI implements InventoryProvider {
 
     private void openHostMenu(Player player) {
         player.sendMessage("§cCette fonctionnalité n'est pas disponible pour le moment..");
+    }
+
+    private ItemStack getHubItem() {
+        int onlineHub = ServerManager.getOnlines(null);
+        return new ItemBuilder(Material.ENDER_CHEST).setName("§6Changer de hub")
+                .setLore("§7Rejoindre un autre hub", "", "§7Il y a §6" + onlineHub + " §7joueur(s) au hub")
+                .toItemStack();
     }
 
     private ItemStack getGameItem(GameItems gameItems) {

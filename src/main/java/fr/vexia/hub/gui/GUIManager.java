@@ -5,6 +5,7 @@ import fr.minuskube.inv.SmartInventory;
 import fr.vexia.api.servers.GameType;
 import fr.vexia.hub.VexiaHub;
 import fr.vexia.hub.gui.main.GameGUI;
+import fr.vexia.hub.gui.main.HubGUI;
 import fr.vexia.hub.gui.main.MainGUI;
 import fr.vexia.hub.gui.profil.FriendsGUI;
 import fr.vexia.hub.gui.profil.ProfilGUI;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 
 public class GUIManager implements Listener {
     private final SmartInventory mainMenu;
+    private final SmartInventory hubMenu;
     private final HashMap<GameType, SmartInventory> gameInventories;
 
     private final SmartInventory friendsMenu;
@@ -40,6 +42,14 @@ public class GUIManager implements Listener {
                 .manager(inventoryManager)
                 .size(5, 9)
                 .title(ChatColor.GOLD + "Menu principal")
+                .build();
+
+        this.hubMenu = SmartInventory.builder()
+                .id("hub_menu")
+                .provider(new HubGUI())
+                .manager(inventoryManager)
+                .size(2, 9)
+                .title("§6Hubs")
                 .build();
 
         this.profilMenu = SmartInventory.builder()
@@ -123,5 +133,9 @@ public class GUIManager implements Listener {
 
     public SmartInventory getSettingsMenu() {
         return settingsMenu;
+    }
+
+    public SmartInventory getHubMenu() {
+        return hubMenu;
     }
 }
