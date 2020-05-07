@@ -12,7 +12,6 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class StatsGUI implements InventoryProvider {
@@ -32,10 +31,10 @@ public class StatsGUI implements InventoryProvider {
             if(i == 0) {
                 itemBuilder.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 1);
             }
-            contents.set(0, i, ClickableItem.of(itemBuilder.toItemStack(), event -> changeGame(gameItem, player, contents, event)));
+            contents.set(0, i, ClickableItem.of(itemBuilder.toItemStack(), event -> changeGame(gameItem, player, contents)));
         }
 
-        changeGame(gameItems[0], player, contents, event);
+        changeGame(gameItems[0], player, contents);
     }
 
     private ClickableItem getItem(StatsType statsType, int value) {
@@ -62,7 +61,7 @@ public class StatsGUI implements InventoryProvider {
         return ClickableItem.of(itemBuilder.toItemStack(), event -> event.setCancelled(true));
     }
 
-    private void changeGame(GameItems gameItems, Player player, InventoryContents contents, InventoryClickEvent event) {
+    private void changeGame(GameItems gameItems, Player player, InventoryContents contents) {
         contents.fillRow(2, ClickableItem.empty(new ItemStack(Material.AIR)));
         for (ClickableItem[] row : contents.all()) {
             for (ClickableItem column : row) {
@@ -74,7 +73,7 @@ public class StatsGUI implements InventoryProvider {
                 }
             }
         }
-        
+
         Statistic statistic = StatsManager.getStatistic(player.getUniqueId(), gameItems.getGameType());
         StatsType[] statisticTypes = statistic.getGameType().getStatsTypes();
         for (int i = 0; i < statisticTypes.length; i++) {
