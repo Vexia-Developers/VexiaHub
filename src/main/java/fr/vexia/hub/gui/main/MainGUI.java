@@ -51,7 +51,7 @@ public class MainGUI implements InventoryProvider {
     }
 
     private void openHostMenu(Player player) {
-        player.sendMessage("§cCette fonctionnalité n'est pas disponible pour le moment..");
+        guiManager.getHostMenu().open(player);
     }
 
     private ItemStack getHubItem() {

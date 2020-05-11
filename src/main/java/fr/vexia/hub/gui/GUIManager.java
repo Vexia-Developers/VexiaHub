@@ -5,6 +5,7 @@ import fr.minuskube.inv.SmartInventory;
 import fr.vexia.api.servers.GameType;
 import fr.vexia.hub.VexiaHub;
 import fr.vexia.hub.gui.main.GameGUI;
+import fr.vexia.hub.gui.host.HostGUI;
 import fr.vexia.hub.gui.main.HubGUI;
 import fr.vexia.hub.gui.main.MainGUI;
 import fr.vexia.hub.gui.profil.FriendsGUI;
@@ -25,6 +26,7 @@ public class GUIManager implements Listener {
     private final SmartInventory mainMenu;
     private final SmartInventory hubMenu;
     private final HashMap<GameType, SmartInventory> gameInventories;
+    private final SmartInventory hostMenu;
 
     private final SmartInventory friendsMenu;
     private final SmartInventory profilMenu;
@@ -41,7 +43,7 @@ public class GUIManager implements Listener {
                 .provider(new MainGUI(this))
                 .manager(inventoryManager)
                 .size(5, 9)
-                .title(ChatColor.GOLD + "Menu principal")
+                .title("Menu principal")
                 .build();
 
         this.hubMenu = SmartInventory.builder()
@@ -49,15 +51,17 @@ public class GUIManager implements Listener {
                 .provider(new HubGUI())
                 .manager(inventoryManager)
                 .size(2, 9)
-                .title("§6Hubs")
+                .title("Hubs")
                 .build();
+
+        this.hostMenu = HostGUI.getSmartInventory(this);
 
         this.profilMenu = SmartInventory.builder()
                 .id("profil_menu")
                 .provider(new ProfilGUI(this))
                 .manager(inventoryManager)
                 .size(3, 9)
-                .title(ChatColor.GOLD + "Profil")
+                .title("Profil")
                 .build();
 
         this.statsMenu = SmartInventory.builder()
@@ -65,7 +69,7 @@ public class GUIManager implements Listener {
                 .provider(new StatsGUI())
                 .manager(inventoryManager)
                 .size(3, 9)
-                .title(ChatColor.GOLD + "Statistiques")
+                .title("Statistiques")
                 .build();
 
         this.friendsMenu = SmartInventory.builder()
@@ -81,7 +85,7 @@ public class GUIManager implements Listener {
                 .provider(new SettingsGUI(this))
                 .manager(inventoryManager)
                 .size(6, 9)
-                .title(ChatColor.GOLD + "Paramètres")
+                .title("Paramètres")
                 .build();
 
         this.gameInventories = new HashMap<>();
@@ -92,7 +96,7 @@ public class GUIManager implements Listener {
                     .provider(new GameGUI(gameType))
                     .manager(inventoryManager)
                     .size(2, 9)
-                    .title("§6Jeux > §e" + gameType.getName())
+                    .title("Jeux > " + gameType.getName())
                     .build();
             gameInventories.put(gameType, gameInv);
         }
@@ -138,4 +142,9 @@ public class GUIManager implements Listener {
     public SmartInventory getHubMenu() {
         return hubMenu;
     }
+
+    public SmartInventory getHostMenu() {
+        return hostMenu;
+    }
+
 }
