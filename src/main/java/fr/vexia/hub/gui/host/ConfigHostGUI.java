@@ -1,6 +1,5 @@
 package fr.vexia.hub.gui.host;
 
-import com.sun.scenario.effect.light.SpotLight;
 import fr.minuskube.inv.ClickableItem;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
