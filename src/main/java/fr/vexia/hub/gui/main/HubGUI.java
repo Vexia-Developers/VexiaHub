@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class HubGUI implements InventoryProvider {
+
     @Override
     public void init(Player player, InventoryContents contents) {
         contents.set(1, 8, ClickableItem.of(new ItemBuilder(Material.ARROW)

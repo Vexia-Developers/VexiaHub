@@ -23,17 +23,19 @@ public class MainGUI implements InventoryProvider {
 
     @Override
     public void init(Player player, InventoryContents contents) {
-        contents.fillRow(5, ClickableItem.of(new ItemBuilder(Material.STAINED_GLASS_PANE)
+        contents.fillRow(4, ClickableItem.of(new ItemBuilder(Material.STAINED_GLASS_PANE)
                 .setName(" ")
                 .setDyeColor(DyeColor.ORANGE)
                 .toItemStack(), event -> event.setCancelled(true)));
 
         contents.set(4, 0, ClickableItem.of(new ItemBuilder(Material.FEATHER)
                 .setName("§6Jump")
+                .setLore("§7Visier le lobby avec le", "§7jump unique")
                 .toItemStack(), event -> player.teleport(VexiaHub.getInstance().getWorldManager().getJumpLocation())));
 
-        contents.set(4, 4, ClickableItem.of(new ItemBuilder(Material.COMMAND)
+        contents.set(2, 4, ClickableItem.of(new ItemBuilder(Material.COMMAND)
                 .setName("§6Hosts")
+                .setLore("§7Créé ton serveur host gratuitement", "§7avec une configuration pour rendre", "§7unique la partie")
                 .toItemStack(), event -> openHostMenu(player)));
 
     }

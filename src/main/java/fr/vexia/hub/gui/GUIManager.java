@@ -23,6 +23,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import java.util.HashMap;
 
 public class GUIManager implements Listener {
+
+    public final InventoryManager inventoryManager;
+
     private final SmartInventory mainMenu;
     private final SmartInventory hubMenu;
     private final HashMap<GameType, SmartInventory> gameInventories;
@@ -35,7 +38,7 @@ public class GUIManager implements Listener {
     private final SmartInventory settingsMenu;
 
     public GUIManager() {
-        InventoryManager inventoryManager = new InventoryManager(VexiaHub.getInstance());
+        inventoryManager = new InventoryManager(VexiaHub.getInstance());
         inventoryManager.init();
 
         this.mainMenu = SmartInventory.builder()
@@ -121,6 +124,10 @@ public class GUIManager implements Listener {
                 settingsMenu.open(player);
                 break;
         }
+    }
+
+    public SmartInventory getMainMenu() {
+        return mainMenu;
     }
 
     public HashMap<GameType, SmartInventory> getGameInventories() {
