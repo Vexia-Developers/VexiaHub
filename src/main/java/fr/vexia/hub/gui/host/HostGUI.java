@@ -51,14 +51,4 @@ public class HostGUI implements InventoryProvider {
     public void openHostConfigMenu(Player player, InventoryClickEvent event){
 
     }
-
-
-    public static SmartInventory getSmartInventory(GUIManager manager){
-        return SmartInventory.builder()
-                .id("host_menu")
-                .provider(new HostGUI(manager))
-                .size(4,9)
-                .title("Hosts")
-                .build();
-    }
 }
