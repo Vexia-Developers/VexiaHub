@@ -54,12 +54,7 @@ public class GUIManager implements Listener {
                 .title("Hubs")
                 .build();
 
-        this.hostMenu = SmartInventory.builder()
-                .id("host_menu")
-                .provider(new HostGUI(this))
-                .size(4,9)
-                .title("Hosts")
-                .build();
+        this.hostMenu = HostGUI.registerSmartInventorys(this, inventoryManager);
 
         this.profilMenu = SmartInventory.builder()
                 .id("profil_menu")

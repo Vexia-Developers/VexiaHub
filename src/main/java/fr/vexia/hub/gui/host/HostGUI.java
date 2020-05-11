@@ -1,6 +1,7 @@
 package fr.vexia.hub.gui.host;
 
 import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.InventoryManager;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
@@ -16,6 +17,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class HostGUI implements InventoryProvider {
 
     private GUIManager guiManager;
+
+    private static SmartInventory createHostGUI;
+    private static SmartInventory listHostConfigGUI;
 
     public static final Material[] iconHostType = {Material.GOLDEN_APPLE, Material.LEATHER, Material.IRON_PICKAXE};
 
@@ -45,10 +49,22 @@ public class HostGUI implements InventoryProvider {
     }
 
     public void openHostCreateMenu(Player player, InventoryClickEvent event){
-        CreateHostGUI.getSmartInventory(guiManager).open(player);
+        createHostGUI.open(player);
     }
 
     public void openHostConfigMenu(Player player, InventoryClickEvent event){
+        listHostConfigGUI.open(player);
+    }
 
+    public static SmartInventory registerSmartInventorys(GUIManager manager, InventoryManager inventoryManager){
+        createHostGUI = CreateHostGUI.getSmartInventory(manager, inventoryManager);
+        listHostConfigGUI = ListHostConfigGUI.getSmartInventory(manager, inventoryManager);
+        return SmartInventory.builder()
+                .id("host_menu")
+                .provider(new HostGUI(manager))
+                .manager(inventoryManager)
+                .size(4,9)
+                .title("Hosts")
+                .build();
     }
 }

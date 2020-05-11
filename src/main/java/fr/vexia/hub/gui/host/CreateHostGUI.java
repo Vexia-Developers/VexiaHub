@@ -1,6 +1,7 @@
 package fr.vexia.hub.gui.host;
 
 import fr.minuskube.inv.ClickableItem;
+import fr.minuskube.inv.InventoryManager;
 import fr.minuskube.inv.SmartInventory;
 import fr.minuskube.inv.content.InventoryContents;
 import fr.minuskube.inv.content.InventoryProvider;
@@ -52,12 +53,13 @@ public class CreateHostGUI implements InventoryProvider {
     }
 
 
-    public static SmartInventory getSmartInventory(GUIManager manager){
+    public static SmartInventory getSmartInventory(GUIManager guiManager, InventoryManager inventoryManager){
         return SmartInventory.builder()
                 .id("host_create_menu")
-                .provider(new CreateHostGUI(manager))
+                .provider(new CreateHostGUI(guiManager))
                 .size(4,9)
-                .title("Hosts > Création d'un serveur")
+                .manager(inventoryManager)
+                .title("Hosts » Création d'un serveur")
                 .build();
     }
 }
