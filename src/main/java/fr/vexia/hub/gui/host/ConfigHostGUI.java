@@ -11,6 +11,7 @@ import fr.vexia.core.items.ItemBuilder;
 import fr.vexia.hub.gui.GUIManager;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -51,7 +52,7 @@ public class ConfigHostGUI implements InventoryProvider {
         }else{
             contents.set(0,4, ClickableItem.of(new ItemBuilder(HostGUI.iconHostType[config.getType().ordinal()]).setName("§6"+config.getType().getName())
                             .setLore(config.getType().getDescription()).addLoreLine(" ").addLoreLine("§a➥ Clic gauche §7changer de mode de jeu").toItemStack(),
-                    event -> getGUI(guiManager, config, ConfigStatus.SELECT_MODE)));
+                    event -> getGUI(guiManager, config, ConfigStatus.SELECT_MODE).open(player)));
             for (ConfigType value : ConfigType.values()) {
                 contents.set(value.position / 8, value.position % 8, ClickableItem.of(value.buildItem(config, true),
                         event -> editValue(player, value, event)));
@@ -202,13 +203,17 @@ public class ConfigHostGUI implements InventoryProvider {
                 builder.addLoreLine("§d➥ Clic Molette §7valeur par défaut");
             }
             if(type == ValueType.INTEGER){
-                ItemStack stack = builder.toItemStack();
-                stack.setAmount((int)getter.apply(config));
-                builder = new ItemBuilder(stack);
+                builder = new ItemBuilder(setMaxStackSize(builder.toItemStack(), (int)getter.apply(config)));
             }
             return builder.toItemStack();
         }
 
+
+        public ItemStack setMaxStackSize(ItemStack item, int amount) {
+            net.minecraft.server.v1_12_R1.ItemStack otherItem = CraftItemStack.asNMSCopy(item);
+            otherItem.getItem().d(amount);
+            return CraftItemStack.asBukkitCopy(otherItem);
+        }
 
     }
 
