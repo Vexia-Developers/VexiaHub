@@ -74,7 +74,7 @@ public class ListHostConfigGUI implements InventoryProvider {
     public static SmartInventory getSmartInventory(GUIManager guiManager, InventoryManager inventoryManager) {
         return SmartInventory.builder()
                 .id("host_list_config_menu")
-                .provider(new CreateHostGUI(guiManager))
+                .provider(new ListHostConfigGUI(guiManager))
                 .size(3, 9)
                 .manager(inventoryManager)
                 .title("Hosts » Mes configurations")
