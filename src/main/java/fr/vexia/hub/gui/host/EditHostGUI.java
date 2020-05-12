@@ -33,15 +33,15 @@ public class EditHostGUI implements InventoryProvider {
 
     @Override
     public void init(Player player, InventoryContents contents) {
-        contents.set(0, 4, ClickableItem.empty(configType.buildItem(config)));
+        contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
         if(configType.type == ConfigHostGUI.ValueType.BOOLEAN){
             contents.set(0, 3, ClickableItem.of(new ItemBuilder(Material.STANDING_BANNER).setDyeColor(DyeColor.RED).setName("§cDésactivé").toItemStack(), event -> {
                 configType.executor.apply(config, false);
-                contents.set(0, 4, ClickableItem.empty(configType.buildItem(config)));
+                contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
             }));
             contents.set(0, 5, ClickableItem.of(new ItemBuilder(Material.STANDING_BANNER).setDyeColor(DyeColor.RED).setName("§aActivé").toItemStack(), event -> {
                 configType.executor.apply(config, true);
-                contents.set(0, 4, ClickableItem.empty(configType.buildItem(config)));
+                contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
             }));
         }
 

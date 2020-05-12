@@ -201,6 +201,11 @@ public class ConfigHostGUI implements InventoryProvider {
                 builder.addLoreLine("§a➥ Clic Gauche §7modifer la valeur");
                 builder.addLoreLine("§d➥ Clic Molette §7valeur par défaut");
             }
+            if(type == ValueType.INTEGER || type == ValueType.FLOAT){
+                ItemStack stack = builder.toItemStack();
+                stack.setAmount((int) getter.apply(config));
+                builder = new ItemBuilder(stack);
+            }
             return builder.toItemStack();
         }
 
