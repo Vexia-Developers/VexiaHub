@@ -91,7 +91,6 @@ public class ConfigHostGUI implements InventoryProvider {
     private void selectMode(Player player, HostGameType type, boolean next){
         config.setType(type);
         if(next){
-            HostManager.create(config);
             getGUI(guiManager, config, ConfigStatus.CREATE_CONFIG);
         }
     }
