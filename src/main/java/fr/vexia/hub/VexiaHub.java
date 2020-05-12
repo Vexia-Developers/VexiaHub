@@ -43,7 +43,7 @@ public class VexiaHub extends VexiaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             totalOnline = PlayerManager.getOnlines().size();
             for (FastBoard fastBoard : boards.values()) {
-                fastBoard.updateLine(8, "§6Joueurs: §a" + totalOnline);
+                fastBoard.updateLine(9, "§6Joueurs: §a" + totalOnline);
             }
         }, 10 * 20L, 10 * 20L);
 
