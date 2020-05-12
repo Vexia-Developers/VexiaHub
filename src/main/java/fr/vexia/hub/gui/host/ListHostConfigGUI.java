@@ -58,7 +58,9 @@ public class ListHostConfigGUI implements InventoryProvider {
         if(sizeConfigs >= 8){
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§cVous ne pouvez pas créer plus de configuration"));
         }else {
-            ConfigHostGUI.getGUI(guiManager, new VexiaHostConfig(), ConfigHostGUI.ConfigStatus.SELECT_MODE).open(player);
+            VexiaHostConfig config = new VexiaHostConfig();
+            config.setOwnerUUID(player.getUniqueId());
+            ConfigHostGUI.getGUI(guiManager, config, ConfigHostGUI.ConfigStatus.SELECT_MODE).open(player);
         }
     }
 

@@ -52,17 +52,20 @@ public class ConfigHostGUI implements InventoryProvider {
             contents.set(3,5, ClickableItem.of(new ItemBuilder(HostGUI.iconHostType[2]).setName("§6"+HostGameType.TaupeGunUHC.getName()).setLore(HostGameType.TaupeGunUHC.getDescription()).toItemStack(),
                     event -> selectMode(player, HostGameType.TaupeGunUHC, true)));
         }else{
+            contents.set(0,4, ClickableItem.of(new ItemBuilder(HostGUI.iconHostType[config.getType().ordinal()]).setName("§6"+config.getType().getName())
+                            .setLore(config.getType().getDescription()).addLoreLine(" ").addLoreLine("§a➥ Clic gauche §7changer de mode de jeu").toItemStack(),
+                    event -> selectMode(player, HostGameType.UHC, true)));
             for (ConfigType value : ConfigType.values()) {
                 contents.set(value.position / 8, value.position % 8, ClickableItem.of(value.buildItem(config),
                         event -> editValue(player, value, event)));
             }
         }
         if(status == ConfigStatus.EDIT_CONFIG){
-            contents.set(3, 0, ClickableItem.of(new ItemBuilder(Material.BARRIER).setName("§cSupprimer la configuration").setLore("§4/!\\ Cette action est irréversible !").toItemStack(),
+            contents.set(5, 0, ClickableItem.of(new ItemBuilder(Material.BARRIER).setName("§cSupprimer la configuration").setLore("§7/!\\ Cette action est irréversible !").toItemStack(),
                     event -> deleteConfig(player)));
         }
         if(status == ConfigStatus.EDIT_CONFIG || status == ConfigStatus.CREATE_CONFIG){
-            contents.set(3, 4, ClickableItem.of(new ItemBuilder(Material.SLIME_BALL).setName("§aSauvegarder").setLore("§7Sauvegarder la configuration actuel").toItemStack(),
+            contents.set(5, 4, ClickableItem.of(new ItemBuilder(Material.SLIME_BALL).setName("§aSauvegarder").setLore("§7Sauvegarder la configuration actuel").toItemStack(),
                     event -> saveConfig(player)));
         }
         contents.set(5, 8, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§cAnnuler").toItemStack(),
