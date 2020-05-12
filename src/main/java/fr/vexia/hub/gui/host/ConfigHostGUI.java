@@ -65,7 +65,7 @@ public class ConfigHostGUI implements InventoryProvider {
             contents.set(3, 4, ClickableItem.of(new ItemBuilder(Material.SLIME_BALL).setName("§aSauvegarder").setLore("§7Sauvegarder la configuration actuel").toItemStack(),
                     event -> saveConfig(player)));
         }
-        contents.set(3, 8, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§cAnnuler").toItemStack(),
+        contents.set(5, 8, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§cAnnuler").toItemStack(),
                 event -> guiManager.getHostMenu().open(player)));
     }
 
@@ -91,7 +91,7 @@ public class ConfigHostGUI implements InventoryProvider {
     private void selectMode(Player player, HostGameType type, boolean next){
         config.setType(type);
         if(next){
-            getGUI(guiManager, config, ConfigStatus.CREATE_CONFIG);
+            getGUI(guiManager, config, ConfigStatus.CREATE_CONFIG).open(player);
         }
     }
 
@@ -163,7 +163,7 @@ public class ConfigHostGUI implements InventoryProvider {
                 new ItemStack(Material.NETHERRACK), (8*4)+4, "Status", VexiaHostConfig::isNether,
                 (hostConfig, value) -> hostConfig.setNether((boolean) value), ValueType.BOOLEAN);
 
-        private String name;
+        String name;
         private String[] description;
         private ItemStack stack;
         private int position;
