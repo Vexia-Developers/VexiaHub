@@ -46,9 +46,9 @@ public class HostGUI implements InventoryProvider {
                 .setDyeColor(DyeColor.ORANGE)
                 .toItemStack(), event -> event.setCancelled(true)));
 
-        contents.set(3, 0, ClickableItem.of(new ItemBuilder(Material.PAPER).setName("§aCréer un serveur host")
-                .setLore("§7Vous pouvez créer un serveur" + "§7host gratuitement en personnalisant", "§7les règles de jeu").toItemStack(), e -> openHostCreateMenu(player, e)));
-        contents.set(3, 4, ClickableItem.of(new ItemBuilder(Material.PAPER).setName("§eMes configurations")
+        contents.set(3, 0, ClickableItem.of(new ItemBuilder(Material.COMMAND).setName("§aCréer un serveur host")
+                .setLore("§7Vous pouvez créer un serveur", "§7host gratuitement en personnalisant", "§7les règles de jeu").toItemStack(), e -> openHostCreateMenu(player, e)));
+        contents.set(3, 4, ClickableItem.of(new ItemBuilder(Material.PAPER).setName("§6Mes configurations")
                 .setLore("§7Vous pouvez editer et créé des", "§7configurations").toItemStack(), e -> openHostConfigMenu(player, e)));
         contents.set(3, 8, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§cRetour").toItemStack(),
                 event -> guiManager.getMainMenu().open(player)));

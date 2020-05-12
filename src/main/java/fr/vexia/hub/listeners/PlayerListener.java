@@ -41,15 +41,16 @@ public class PlayerListener implements Listener {
         VexiaHub.getInstance().getTags().put(player.getUniqueId(), team);
 
         FastBoard fastBoard = new FastBoard(player);
-        fastBoard.updateTitle("§6§lVEXIA NETWORK");
+        fastBoard.updateTitle("   §6§lVEXIA §r§lNETWORK   ");
         fastBoard.updateLines(
                 " ",
                 "§6Grade:",
                 " " + account.getRank().getColor() + account.getRank().getPrefix(),
+                " ",
                 "§6VXCoins:",
                 "    §e" + account.getCoins() + " ✪",
                 "§6VXCrédits:",
-                "    §e" + account.getCredits() + " ⛃",
+                "    §b" + account.getCredits() + " ⛃",
                 "",
                 "§6Joueurs: §a" + VexiaHub.getInstance().getTotalOnline(),
                 "§6Lobby: §d#" + Bukkit.getMotd().substring(3),
