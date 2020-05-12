@@ -13,7 +13,16 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
+import sun.security.krb5.Config;
+
+import javax.lang.model.element.VariableElement;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ConfigHostGUI implements InventoryProvider {
 
@@ -43,10 +52,10 @@ public class ConfigHostGUI implements InventoryProvider {
             contents.set(3,5, ClickableItem.of(new ItemBuilder(HostGUI.iconHostType[2]).setName("§6"+HostGameType.TaupeGunUHC.getName()).setLore(HostGameType.TaupeGunUHC.getDescription()).toItemStack(),
                     event -> selectMode(player, HostGameType.TaupeGunUHC, true)));
         }else{
-            contents.set(1, 4, ClickableItem.of(new ItemBuilder(Material.SKULL).setName("§eNombre de joueurs maximum")
-                            .setLore("§7Paramétrez le nombre", "§7de joueurs maximum", "", "§e» §7Joueurs : §e"+config.getMaxPlayer(),"",
-                                    "§a➥ Clic Gauche §7modifier la valeur", "§d➥ Clic Molette §7valeur par défaut").toItemStack(),
-                    event -> editValue(player, "Nombre de joueurs maximum", config.getMaxPlayer(), event)));
+            for (ConfigType value : ConfigType.values()) {
+                contents.set(value.position / 8, value.position % 8, ClickableItem.of(value.buildItem(config),
+                        event -> editValue(player, value, event)));
+            }
         }
         if(status == ConfigStatus.EDIT_CONFIG){
             contents.set(3, 0, ClickableItem.of(new ItemBuilder(Material.BARRIER).setName("§cSupprimer la configuration").setLore("§4/!\\ Cette action est irréversible !").toItemStack(),
@@ -70,7 +79,7 @@ public class ConfigHostGUI implements InventoryProvider {
         HostGUI.listHostConfigGUI.open(player);
     }
 
-    private void editValue(Player player, String name, int value, InventoryClickEvent event){
+    private void editValue(Player player, ConfigType type, InventoryClickEvent event){
 
     }
 
@@ -111,6 +120,89 @@ public class ConfigHostGUI implements InventoryProvider {
         public String getTitle() {
             return title;
         }
+    }
+
+    public enum ValueType {
+        BOOLEAN(is -> ((boolean)is) ? "§aActivé" : "§cDésactivé"),
+        STRING(null),
+        INTEGER(null),
+        FLOAT(null);
+
+        private Function<Object, String> format;
+
+        ValueType(Function<Object, String> format){
+            this.format = format;
+        }
+
+        public Function<Object, String> getFormat() {
+            return (format != null) ? format : Object::toString;
+        }
+    }
+
+    public enum ConfigType {
+        PLAYER_SIZE("Nombre de joueurs maximum", new String[]{"Paramétrez le nombre", "de joueurs maximum"},
+                new ItemStack(Material.SKULL), (8)+2, "Joueurs", VexiaHostConfig::getMaxPlayer, (hostConfig, value) -> hostConfig.setMaxPlayer((int)value), ValueType.INTEGER),
+        TEAMS("Nombre de joueurs par team", new String[]{"Choisir le nombre de", "joueurs maximum dans chaque", "teams"},
+                new ItemStack(Material.STANDING_BANNER, 1, (short) 13), (8)+4, "Equipes", VexiaHostConfig::getTeams,
+                (hostConfig, value) -> hostConfig.setTeams((int)value), ValueType.INTEGER),
+        BORDER_SIZE("Taille des bordure", new String[]{"Définir la taille des", "bordure au début de la partie"},
+                new ItemStack(Material.STAINED_GLASS, 1, (byte)5), (8*2)+3, "Taille (en blocks)", VexiaHostConfig::getBorderSize,
+                (hostConfig, value) -> hostConfig.setBorderSize((int)value), ValueType.INTEGER),
+        BORDER_END_SIZE("Taille des bordure de fin de partie", new String[]{"Définir la taille des", "bordure a la fin de la partie", "de la partie"},
+                new ItemStack(Material.STAINED_GLASS, 1, (byte)13), (8*2)+4, "Taille (en blocks)", VexiaHostConfig::getBorderEndSize,
+                (hostConfig, value) -> hostConfig.setBorderEndSize((int)value), ValueType.INTEGER),
+        BORDER_SPEED("Vitesse des bordure", new String[]{"Définir la vitesse de", "déplacement des bordures"},
+                new ItemStack(Material.WATCH), (8*2)+5, "Vitesse (en blocks/s)", VexiaHostConfig::getBorderSpeed,
+                (hostConfig, value) -> hostConfig.setBorderSpeed((int)value), ValueType.FLOAT),
+        BORDER_REDUCE("Temps avant les borudre", new String[]{"Définir un temps avant", "que les bordures commence", "à rédure"},
+                new ItemStack(Material.IRON_BARDING), (8*3)+3, "Temps (en minutes)", VexiaHostConfig::getBorderReduce,
+                (hostConfig, value) -> hostConfig.setBorderReduce((int)value), ValueType.INTEGER),
+        TIME_BEFORE_PVP("Temps avant le PvP", new String[]{"Définir un temps avant", "l'activation du PvP"},
+                new ItemStack(Material.DIAMOND_SWORD), (8*3)+5, "Temps (en minutes)", VexiaHostConfig::getTimeBeforePVP,
+                (hostConfig, value) -> hostConfig.setTimeBeforePVP((int)value), ValueType.INTEGER),
+        NETHER("Nether" , new String[]{"Définir la présence du", "nether ou non"},
+                new ItemStack(Material.NETHERRACK), (8*4)+4, "Status", VexiaHostConfig::isNether,
+                (hostConfig, value) -> hostConfig.setNether((boolean) value), ValueType.BOOLEAN);
+
+        private String name;
+        private String[] description;
+        private ItemStack stack;
+        private int position;
+        private String value;
+        ConfigGetter getter;
+        ConfigExecutor executor;
+        ValueType type;
+
+
+        ConfigType(String name, String[] description, ItemStack stack, int position, String value, ConfigGetter getter, ConfigExecutor executor, ValueType type){
+            this.name = name;
+            this.description = description;
+            this.stack = stack;
+            this.position = position;
+            this.value = value;
+            this.getter = getter;
+            this.executor = executor;
+            this.type = type;
+        }
+
+
+        public ItemStack buildItem(VexiaHostConfig config) {
+            List<String> formatDescription = Arrays.stream(description).map((value) -> "§7" + value).collect(Collectors.toList());
+            return new ItemBuilder(stack).setName("§6"+name)
+                    .setLore(formatDescription).addLoreLine("").addLoreLine("§e➲ §7"+value+": §e"+type.getFormat().apply(getter.apply(config))).toItemStack();
+        }
+
+
+    }
+
+    @FunctionalInterface
+    interface ConfigGetter {
+        public Object apply(VexiaHostConfig hostConfig);
+    }
+
+    @FunctionalInterface
+    interface ConfigExecutor {
+        public void apply(VexiaHostConfig hostConfig, Object value);
     }
 
 }
