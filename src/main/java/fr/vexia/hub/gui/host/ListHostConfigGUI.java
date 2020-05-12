@@ -41,11 +41,11 @@ public class ListHostConfigGUI implements InventoryProvider {
         }
         contents.add(ClickableItem.of(new ItemBuilder(Material.COMMAND).setName("§aCréer une configuration").setLore("§7Prépare ta configuration", "§7et sauvegarde là").toItemStack(),
                 event -> createConfig(player, configs.size())));
-        contents.fillRow(2, ClickableItem.of(new ItemBuilder(Material.STAINED_GLASS_PANE)
+        contents.fillRow(1, ClickableItem.of(new ItemBuilder(Material.STAINED_GLASS_PANE)
                 .setName(" ")
                 .setDyeColor(DyeColor.ORANGE)
                 .toItemStack(), event -> event.setCancelled(true)));
-        contents.set(2, 8, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§cRetour").toItemStack(),
+        contents.set(1, 8, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§cRetour").toItemStack(),
                 event -> guiManager.getHostMenu().open(player)));
     }
 
@@ -77,7 +77,7 @@ public class ListHostConfigGUI implements InventoryProvider {
         return SmartInventory.builder()
                 .id("host_list_config_menu")
                 .provider(new ListHostConfigGUI(guiManager))
-                .size(3, 9)
+                .size(2, 9)
                 .manager(inventoryManager)
                 .title("Hosts » Mes configurations")
                 .build();

@@ -8,6 +8,7 @@ import fr.minuskube.inv.content.InventoryProvider;
 import fr.minuskube.inv.content.Pagination;
 import fr.vexia.api.data.manager.HostManager;
 import fr.vexia.api.data.manager.PlayerManager;
+import fr.vexia.api.data.redis.pubsub.PubSubAPI;
 import fr.vexia.api.players.VexiaPlayer;
 import fr.vexia.api.servers.hosts.VexiaHostConfig;
 import fr.vexia.core.items.ItemBuilder;
@@ -33,7 +34,7 @@ public class CreateHostGUI implements InventoryProvider {
         for (VexiaHostConfig hostConfig : hostConfigs) {
             contents.add(ClickableItem.of(new ItemBuilder(HostGUI.iconHostType[hostConfig.getType().ordinal()])
                     .setName("§6"+hostConfig.getType().getName()+ " #" + hostConfig.getId())
-                    .setLore(hostConfig.buildConfig()).toItemStack(), event -> selectConfig(player, event)));
+                    .setLore(hostConfig.buildConfig()).toItemStack(), event -> selectConfig(player, hostConfig, event)));
         }
         contents.add(ClickableItem.of(new ItemBuilder(Material.COMMAND).setName("§aCréer un serveur")
                 .setLore("§7sans configuration prédéfinie").toItemStack(), event -> createServer(player, event)));
@@ -44,12 +45,16 @@ public class CreateHostGUI implements InventoryProvider {
 
     }
 
-    public void selectConfig(Player player, InventoryClickEvent event){
-
+    public void selectConfig(Player player, VexiaHostConfig config, InventoryClickEvent event){
+        player.closeInventory();
+        HostManager.pubCreateServer(config);
     }
 
     public void createServer(Player player, InventoryClickEvent event){
-
+        VexiaHostConfig config = new VexiaHostConfig();
+        config.setOwnerUUID(player.getUniqueId());
+        config.setServerName("instant");
+        ConfigHostGUI.getGUI(guiManager, config, ConfigHostGUI.ConfigStatus.CREATE_CONFIG).open(player);
     }
 
 
@@ -59,7 +64,7 @@ public class CreateHostGUI implements InventoryProvider {
                 .provider(new CreateHostGUI(guiManager))
                 .size(4,9)
                 .manager(inventoryManager)
-                .title("Hosts » Création d'un serveur")
+                .title("Choisir la configuration")
                 .build();
     }
 }

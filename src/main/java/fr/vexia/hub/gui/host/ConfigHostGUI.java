@@ -63,8 +63,17 @@ public class ConfigHostGUI implements InventoryProvider {
                     event -> deleteConfig(player)));
         }
         if(status == ConfigStatus.EDIT_CONFIG || status == ConfigStatus.CREATE_CONFIG){
-            contents.set(5, 4, ClickableItem.of(new ItemBuilder(Material.SLIME_BALL).setName("§aSauvegarder").setLore("§7Sauvegarder la configuration actuel").toItemStack(),
-                    event -> saveConfig(player)));
+            if(config.getServerName().equals("instant")){
+                contents.set(5, 4, ClickableItem.of(new ItemBuilder(Material.SLIME_BALL).setName("§aCréer le serveur").setLore("§7avec la configuration que", "§7avez défini").toItemStack(),
+                        event -> {
+                            player.closeInventory();
+                            HostManager.pubCreateServer(config);
+                        }));
+            }else{
+                contents.set(5, 4, ClickableItem.of(new ItemBuilder(Material.SLIME_BALL).setName("§aSauvegarder").setLore("§7Sauvegarder la configuration actuel").toItemStack(),
+                        event -> saveConfig(player)));
+            }
+
         }
         contents.set(5, 8, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§cAnnuler").toItemStack(),
                 event -> guiManager.getHostMenu().open(player)));
@@ -86,7 +95,7 @@ public class ConfigHostGUI implements InventoryProvider {
             event.getInventory().setItem(event.getSlot(), type.buildItem(config, true));
             player.updateInventory();
         }else{
-            player.sendMessage("EDIT "+type.name);
+            EditHostGUI.getGUI(guiManager, config, type).open(player);
         }
     }
 
@@ -148,9 +157,9 @@ public class ConfigHostGUI implements InventoryProvider {
 
     public enum ConfigType {
         PLAYER_SIZE("Nombre de joueurs maximum", new String[]{"Paramétrez le nombre", "de joueurs maximum"},
-                new ItemStack(Material.SKULL, 1, (short) 3), (8)+2, "Joueurs", VexiaHostConfig::getMaxPlayer, (hostConfig, value) -> hostConfig.setMaxPlayer((int)value), ValueType.INTEGER),
+                new ItemStack(Material.SKULL, 1, (short) 3), 12, "Joueurs", VexiaHostConfig::getMaxPlayer, (hostConfig, value) -> hostConfig.setMaxPlayer((int)value), ValueType.INTEGER),
         TEAMS("Nombre de joueurs par team", new String[]{"Choisir le nombre de", "joueurs maximum dans chaque", "teams"},
-                new ItemStack(Material.STANDING_BANNER, 1, (short) 10), (8)+4, "Equipes", VexiaHostConfig::getTeams,
+                new ItemStack(Material.STANDING_BANNER, 1, (short) 10), 14, "Equipes", VexiaHostConfig::getTeams,
                 (hostConfig, value) -> hostConfig.setTeams((int)value), ValueType.INTEGER),
         BORDER_SIZE("Taille des bordure", new String[]{"Définir la taille des", "bordure au début de la partie"},
                 new ItemStack(Material.STAINED_GLASS, 1, (byte)5), (8*2)+1, "Taille (en blocks)", VexiaHostConfig::getBorderSize,
