@@ -165,19 +165,19 @@ public class ConfigHostGUI implements InventoryProvider {
                 new ItemStack(Material.STAINED_GLASS, 1, (byte)5), (8*2)+1, "Taille (en blocks)", VexiaHostConfig::getBorderSize,
                 (hostConfig, value) -> hostConfig.setBorderSize((int)value), ValueType.INTEGER),
         BORDER_END_SIZE("Taille des bordure de fin de partie", new String[]{"Définir la taille des", "bordure a la fin de la partie", "de la partie"},
-                new ItemStack(Material.STAINED_GLASS, 1, (byte)14), (8*2)+2, "Taille (en blocks)", VexiaHostConfig::getBorderEndSize,
+                new ItemStack(Material.STAINED_GLASS, 1, (byte)14), (8*3)+3, "Taille (en blocks)", VexiaHostConfig::getBorderEndSize,
                 (hostConfig, value) -> hostConfig.setBorderEndSize((int)value), ValueType.INTEGER),
         BORDER_SPEED("Vitesse des bordure", new String[]{"Définir la vitesse de", "déplacement des bordures"},
                 new ItemStack(Material.WATCH), (8*3)+2, "Vitesse (en blocks/s)", VexiaHostConfig::getBorderSpeed,
                 (hostConfig, value) -> hostConfig.setBorderSpeed((float)value), ValueType.FLOAT),
         BORDER_REDUCE("Temps avant les borudre", new String[]{"Définir un temps avant", "que les bordures commence", "à rédure"},
-                new ItemStack(Material.IRON_FENCE), (8*2)+6, "Temps (en minutes)", VexiaHostConfig::getBorderReduce,
+                new ItemStack(Material.IRON_FENCE), (8*3)+4, "Temps (en minutes)", VexiaHostConfig::getBorderReduce,
                 (hostConfig, value) -> hostConfig.setBorderReduce((int)value), ValueType.INTEGER),
         TIME_BEFORE_PVP("Temps avant le PvP", new String[]{"Définir un temps avant", "l'activation du PvP"},
-                new ItemStack(Material.DIAMOND_SWORD), (8*2)+7, "Temps (en minutes)", VexiaHostConfig::getTimeBeforePVP,
+                new ItemStack(Material.DIAMOND_SWORD), (8*3)+3, "Temps (en minutes)", VexiaHostConfig::getTimeBeforePVP,
                 (hostConfig, value) -> hostConfig.setTimeBeforePVP((int)value), ValueType.INTEGER),
         NETHER("Nether" , new String[]{"Définir la présence du", "nether ou non"},
-                new ItemStack(Material.NETHERRACK), (8*3)+4, "Status", VexiaHostConfig::isNether,
+                new ItemStack(Material.NETHERRACK), (8*2)+4, "Status", VexiaHostConfig::isNether,
                 (hostConfig, value) -> hostConfig.setNether((boolean) value), ValueType.BOOLEAN);
 
         String name;
