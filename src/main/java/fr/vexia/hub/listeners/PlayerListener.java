@@ -5,8 +5,6 @@ import fr.vexia.api.players.VexiaPlayer;
 import fr.vexia.api.players.rank.Rank;
 import fr.vexia.core.items.ItemBuilder;
 import fr.vexia.core.player.PlayerUtils;
-import fr.vexia.core.scheduler.ShareRunnable;
-import fr.vexia.core.scheduler.ShareRunnableManager;
 import fr.vexia.core.scoreboard.FastBoard;
 import fr.vexia.core.scoreboard.TeamsTagsManager;
 import fr.vexia.hub.VexiaHub;
@@ -51,43 +49,25 @@ public class PlayerListener implements Listener {
                 "§eplay.vexia.fr   ");
         VexiaHub.getInstance().getBoards().put(player.getUniqueId(), fastBoard);
 
-        ShareRunnableManager.addShareRunnable(VexiaHub.getInstance(), true, 1, new ShareRunnable() {
-            @Override
-            public void perform() {
-                System.out.println("perform");
-                VexiaPlayer account = PlayerManager.get(player.getUniqueId());
-                if (account.getRank().getId() >= Rank.VX.getId()) {
-                    player.setAllowFlight(true);
-                }
-
-                String teamName = account.getRank().getTab() + "/" + account.getName().substring(0, 5) + "-" + account.getUUID().toString().substring(0, 5);
-                fastBoard.updateLine(2, " " + account.getRank().getColor() + account.getRank().getPrefix());
-                fastBoard.updateLine(5, "    §e" + account.getCoins() + " ✪");
-                fastBoard.updateLine(7, "    §b" + account.getCredits() +" ⛃");
-
-                Bukkit.getScheduler().runTask(VexiaHub.getInstance(), () -> {
-                    TeamsTagsManager team = new TeamsTagsManager(teamName,
-                            account.getRank().getColoredPrefix() + " ", null,
-                            Bukkit.getScoreboardManager().getMainScoreboard());
-                    team.set(player);
-                    VexiaHub.getInstance().getTags().put(player.getUniqueId(), team);
-                });
+        Bukkit.getScheduler().runTaskAsynchronously(VexiaHub.getInstance(), () -> {
+            VexiaPlayer account = PlayerManager.get(player.getUniqueId());
+            if (account.getRank().getId() >= Rank.VX.getId()) {
+                player.setAllowFlight(true);
             }
 
-            @Override
-            public boolean ended() {
-                return true;
-            }
+            String teamName = account.getRank().getTab() + "/" + account.getName().substring(0, 5) + "-" + account.getUUID().toString().substring(0, 5);
+            fastBoard.updateLine(2, " " + account.getRank().getColor() + account.getRank().getPrefix());
+            fastBoard.updateLine(5, "    §e" + account.getCoins() + " ✪");
+            fastBoard.updateLine(7, "    §b" + account.getCredits() +" ⛃");
 
-            @Override
-            public void cancel() {
+            Bukkit.getScheduler().runTask(VexiaHub.getInstance(), () -> {
+                TeamsTagsManager team = new TeamsTagsManager(teamName,
+                        account.getRank().getColoredPrefix() + " ", null,
+                        Bukkit.getScoreboardManager().getMainScoreboard());
+                team.set(player);
+                VexiaHub.getInstance().getTags().put(player.getUniqueId(), team);
+            });
 
-            }
-
-            @Override
-            public void reset() {
-
-            }
         });
     }
 
