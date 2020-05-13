@@ -47,7 +47,7 @@ public class EditHostGUI implements InventoryProvider {
                 contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
             }));
         }else if(configType.type == ConfigHostGUI.ValueType.INTEGER){
-            ItemStack builder1 = new ItemBuilder(Material.BANNER, 1, (short) 14).setName("§c-3").addPatterns(new Pattern(DyeColor.WHITE, PatternType.HALF_HORIZONTAL), new Pattern(DyeColor.RED, PatternType.BORDER)).toItemStack();
+            ItemStack builder1 = new ItemBuilder(Material.STANDING_BANNER, 1, (short) 14).setName("§c-3").addPatterns(new Pattern(DyeColor.WHITE, PatternType.HALF_HORIZONTAL), new Pattern(DyeColor.RED, PatternType.BORDER)).toItemStack();
             contents.set(0, 0, ClickableItem.of(builder1, event -> {
                 int value = (int) configType.getter.apply(config);
                 if(value - 3 >= 0){
