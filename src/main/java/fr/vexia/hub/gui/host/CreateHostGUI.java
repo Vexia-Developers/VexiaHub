@@ -13,6 +13,7 @@ import fr.vexia.api.players.VexiaPlayer;
 import fr.vexia.api.servers.hosts.VexiaHostConfig;
 import fr.vexia.core.items.ItemBuilder;
 import fr.vexia.hub.gui.GUIManager;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -38,6 +39,12 @@ public class CreateHostGUI implements InventoryProvider {
         }
         contents.add(ClickableItem.of(new ItemBuilder(Material.COMMAND).setName("§aCréer un serveur")
                 .setLore("§7sans configuration prédéfinie").toItemStack(), event -> createServer(player, event)));
+        contents.fillRow(1, ClickableItem.of(new ItemBuilder(Material.STAINED_GLASS_PANE)
+                .setName(" ")
+                .setDyeColor(DyeColor.ORANGE)
+                .toItemStack(), event -> event.setCancelled(true)));
+        contents.set(1, 8, ClickableItem.of(new ItemBuilder(Material.ARROW).setName("§cRetour").toItemStack(),
+                event -> guiManager.getHostMenu().open(player)));
     }
 
     @Override
@@ -62,7 +69,7 @@ public class CreateHostGUI implements InventoryProvider {
         return SmartInventory.builder()
                 .id("host_create_menu")
                 .provider(new CreateHostGUI(guiManager))
-                .size(4,9)
+                .size(2,9)
                 .manager(inventoryManager)
                 .title("Choisir la configuration")
                 .build();

@@ -159,7 +159,7 @@ public class ConfigHostGUI implements InventoryProvider {
         PLAYER_SIZE("Nombre de joueurs maximum", new String[]{"Paramétrez le nombre", "de joueurs maximum"},
                 new ItemStack(Material.SKULL, 1, (short) 3), 12, "Joueurs", VexiaHostConfig::getMaxPlayer, (hostConfig, value) -> hostConfig.setMaxPlayer((int)value), ValueType.INTEGER),
         TEAMS("Nombre de joueurs par team", new String[]{"Choisir le nombre de", "joueurs maximum dans chaque", "teams"},
-                new ItemStack(Material.STANDING_BANNER, 1, (short) 10), 14, "Equipes", VexiaHostConfig::getTeams,
+                new ItemBuilder(Material.BANNER).setBanner(DyeColor.PURPLE).toItemStack(), 14, "Equipes", VexiaHostConfig::getTeams,
                 (hostConfig, value) -> hostConfig.setTeams((int)value), ValueType.INTEGER),
         BORDER_SIZE("Taille des bordure", new String[]{"Définir la taille des", "bordure au début de la partie"},
                 new ItemStack(Material.STAINED_GLASS, 1, (byte)5), (8*2)+1, "Taille (en blocks)", VexiaHostConfig::getBorderSize,
@@ -212,7 +212,7 @@ public class ConfigHostGUI implements InventoryProvider {
                 builder.addLoreLine("§d➥ Clic Molette §7valeur par défaut");
             }
             if(type == ValueType.INTEGER){
-                builder = new ItemBuilder(setMaxStackSize(builder.toItemStack(), (int)getter.apply(config)));
+                return setMaxStackSize(builder.toItemStack(), (int)getter.apply(config));
             }
             return builder.toItemStack();
         }

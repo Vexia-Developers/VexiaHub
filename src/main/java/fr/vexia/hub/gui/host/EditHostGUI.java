@@ -46,55 +46,55 @@ public class EditHostGUI implements InventoryProvider {
                 configType.executor.apply(config, true);
                 contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
             }));
-        }else if(configType.type == ConfigHostGUI.ValueType.INTEGER){
-            ItemStack builder1 = new ItemBuilder(Material.BANNER).setName("§c-3").setBanner(DyeColor.RED, new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE), new Pattern(DyeColor.RED, PatternType.BORDER)).toItemStack();
+        }else if(configType.type == ConfigHostGUI.ValueType.INTEGER || configType.type == ConfigHostGUI.ValueType.FLOAT){
+            ItemStack builder1 = new ItemBuilder(Material.BANNER).setName("§c-"+((configType.type == ConfigHostGUI.ValueType.FLOAT) ? "1.0" : "10")).setBanner(DyeColor.RED, new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE), new Pattern(DyeColor.RED, PatternType.BORDER)).toItemStack();
             contents.set(0, 0, ClickableItem.of(builder1, event -> {
                 int value = (int) configType.getter.apply(config);
-                if(value - 3 >= 0){
-                    configType.executor.apply(config, value - 3);
+                if(value - ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 1.0 : 10) >= 0){
+                    configType.executor.apply(config, value - ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 1.0 : 10));
                     contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
-            ItemStack builder2 = new ItemBuilder(Material.BANNER).setName("§c-2").setBanner(DyeColor.ORANGE, new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE), new Pattern(DyeColor.ORANGE, PatternType.BORDER)).toItemStack();
+            ItemStack builder2 = new ItemBuilder(Material.BANNER).setName("§c-"+((configType.type == ConfigHostGUI.ValueType.FLOAT) ? "0.5" : "5")).setBanner(DyeColor.ORANGE, new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE), new Pattern(DyeColor.ORANGE, PatternType.BORDER)).toItemStack();
             contents.set(0, 1, ClickableItem.of(builder2, event -> {
                 int value = (int) configType.getter.apply(config);
-                if(value - 2 >= 0){
-                    configType.executor.apply(config, value - 2);
+                if(value - ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 0.5 : 5) >= 0){
+                    configType.executor.apply(config, value - ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 0.5 : 5));
                     contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
-            ItemStack builder3 = new ItemBuilder(Material.BANNER).setName("§c-1").setBanner(DyeColor.YELLOW, new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE), new Pattern(DyeColor.YELLOW, PatternType.BORDER)).toItemStack();
+            ItemStack builder3 = new ItemBuilder(Material.BANNER).setName("§c-"+((configType.type == ConfigHostGUI.ValueType.FLOAT) ? "0.1" : "1")).setBanner(DyeColor.YELLOW, new Pattern(DyeColor.WHITE, PatternType.STRIPE_MIDDLE), new Pattern(DyeColor.YELLOW, PatternType.BORDER)).toItemStack();
             contents.set(0, 2, ClickableItem.of(builder3, event -> {
                 int value = (int) configType.getter.apply(config);
-                if(value - 1 >= 0){
-                    configType.executor.apply(config, value - 1);
+                if(value - ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 0.1 : 1) >= 0){
+                    configType.executor.apply(config, value - ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 0.1 : 1));
                     contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
-            ItemStack builder4 = new ItemBuilder(Material.BANNER).setName("§a+1").setBanner(DyeColor.CYAN, new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.CYAN, PatternType.BORDER),
+            ItemStack builder4 = new ItemBuilder(Material.BANNER).setName("§a+"+((configType.type == ConfigHostGUI.ValueType.FLOAT) ? "0.1" : "1")).setBanner(DyeColor.CYAN, new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.CYAN, PatternType.BORDER),
                     new Pattern(DyeColor.CYAN, PatternType.STRIPE_BOTTOM), new Pattern(DyeColor.CYAN, PatternType.STRIPE_TOP)).toItemStack();
             contents.set(0, 6, ClickableItem.of(builder4, event -> {
                 int value = (int) configType.getter.apply(config);
-                if(value + 1 <= 120){
-                    configType.executor.apply(config, value + 1);
+                if(value + ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 0.1 : 1) <= 1500){
+                    configType.executor.apply(config, value + ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 0.1 : 1));
                     contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
-            ItemStack builder5 = new ItemBuilder(Material.BANNER).setName("§a+2").setBanner(DyeColor.LIME, new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.LIME, PatternType.BORDER),
+            ItemStack builder5 = new ItemBuilder(Material.BANNER).setName("§a+"+((configType.type == ConfigHostGUI.ValueType.FLOAT) ? "0.5" : "5")).setBanner(DyeColor.LIME, new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.LIME, PatternType.BORDER),
                     new Pattern(DyeColor.LIME, PatternType.STRIPE_BOTTOM), new Pattern(DyeColor.LIME, PatternType.STRIPE_TOP)).toItemStack();
             contents.set(0, 7, ClickableItem.of(builder5, event -> {
                 int value = (int) configType.getter.apply(config);
-                if(value + 2 <= 120){
-                    configType.executor.apply(config, value + 2);
+                if(value + ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 0.5 : 5) <= 1500){
+                    configType.executor.apply(config, value + ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 0.50 : 5));
                     contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
-            ItemStack builder6 = new ItemBuilder(Material.BANNER).setName("§a+3").setBanner(DyeColor.GREEN, new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.GREEN, PatternType.BORDER),
+            ItemStack builder6 = new ItemBuilder(Material.BANNER).setName("§a+"+((configType.type == ConfigHostGUI.ValueType.FLOAT) ? "1.0" : "10")).setBanner(DyeColor.GREEN, new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.GREEN, PatternType.BORDER),
                     new Pattern(DyeColor.GREEN, PatternType.STRIPE_BOTTOM), new Pattern(DyeColor.GREEN, PatternType.STRIPE_TOP)).toItemStack();
             contents.set(0, 8, ClickableItem.of(builder6, event -> {
                 int value = (int) configType.getter.apply(config);
-                if(value + 3 <= 120){
-                    configType.executor.apply(config, value + 3);
+                if(value + ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 1.0 : 10) <= 1500){
+                    configType.executor.apply(config, value + ((configType.type == ConfigHostGUI.ValueType.FLOAT) ? 1.0 : 10));
                     contents.set(0, 4, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
