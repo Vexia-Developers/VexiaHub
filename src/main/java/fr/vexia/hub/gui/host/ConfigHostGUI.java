@@ -55,7 +55,7 @@ public class ConfigHostGUI implements InventoryProvider {
                     event -> getGUI(guiManager, config, ConfigStatus.SELECT_MODE).open(player)));
             for (ConfigType value : ConfigType.values()) {
                 contents.set(value.position / 8, value.position % 8, ClickableItem.of(value.buildItem(config, true),
-                        event -> editValue(player, value, event)));
+                        event -> editValue(player, value, event, contents)));
             }
         }
         if(status == ConfigStatus.EDIT_CONFIG){
@@ -89,11 +89,11 @@ public class ConfigHostGUI implements InventoryProvider {
         HostGUI.listHostConfigGUI.open(player);
     }
 
-    private void editValue(Player player, ConfigType type, InventoryClickEvent event){
+    private void editValue(Player player, ConfigType type, InventoryClickEvent event, InventoryContents contents){
         if(event.getClick() == ClickType.MIDDLE){
             type.executor.apply(config, type.getter.apply(new VexiaHostConfig()));
-            event.getInventory().setItem(event.getSlot(), type.buildItem(config, true));
-            player.updateInventory();
+            contents.set(event.getSlot()/8, event.getSlot() % 8, ClickableItem.of(type.buildItem(config, true),
+                    event2 -> editValue(player, type, event2, contents)));
         }else{
             EditHostGUI.getGUI(guiManager, config, type).open(player);
         }
@@ -157,9 +157,9 @@ public class ConfigHostGUI implements InventoryProvider {
 
     public enum ConfigType {
         PLAYER_SIZE("Nombre de joueurs maximum", new String[]{"Paramétrez le nombre", "de joueurs maximum"},
-                new ItemStack(Material.SKULL, 1, (short) 3), 12, "Joueurs", VexiaHostConfig::getMaxPlayer, (hostConfig, value) -> hostConfig.setMaxPlayer((int)value), ValueType.INTEGER),
+                new ItemStack(Material.SKULL_ITEM, 1, (short) 3), 11, "Joueurs", VexiaHostConfig::getMaxPlayer, (hostConfig, value) -> hostConfig.setMaxPlayer((int)value), ValueType.INTEGER),
         TEAMS("Nombre de joueurs par team", new String[]{"Choisir le nombre de", "joueurs maximum dans chaque", "teams"},
-                new ItemBuilder(Material.BANNER).setBanner(DyeColor.PURPLE).toItemStack(), 14, "Equipes", VexiaHostConfig::getTeams,
+                new ItemBuilder(Material.BANNER).setBanner(DyeColor.PURPLE).toItemStack(), 13, "Equipes", VexiaHostConfig::getTeams,
                 (hostConfig, value) -> hostConfig.setTeams((int)value), ValueType.INTEGER),
         BORDER_SIZE("Taille des bordure", new String[]{"Définir la taille des", "bordure au début de la partie"},
                 new ItemStack(Material.STAINED_GLASS, 1, (byte)5), (8*2)+1, "Taille (en blocks)", VexiaHostConfig::getBorderSize,
@@ -168,13 +168,13 @@ public class ConfigHostGUI implements InventoryProvider {
                 new ItemStack(Material.STAINED_GLASS, 1, (byte)14), (8*2)+2, "Taille (en blocks)", VexiaHostConfig::getBorderEndSize,
                 (hostConfig, value) -> hostConfig.setBorderEndSize((int)value), ValueType.INTEGER),
         BORDER_SPEED("Vitesse des bordure", new String[]{"Définir la vitesse de", "déplacement des bordures"},
-                new ItemStack(Material.WATCH), (8*2)+3, "Vitesse (en blocks/s)", VexiaHostConfig::getBorderSpeed,
+                new ItemStack(Material.WATCH), (8*3)+2, "Vitesse (en blocks/s)", VexiaHostConfig::getBorderSpeed,
                 (hostConfig, value) -> hostConfig.setBorderSpeed((int)value), ValueType.FLOAT),
         BORDER_REDUCE("Temps avant les borudre", new String[]{"Définir un temps avant", "que les bordures commence", "à rédure"},
-                new ItemStack(Material.IRON_FENCE), (8*2)+5, "Temps (en minutes)", VexiaHostConfig::getBorderReduce,
+                new ItemStack(Material.IRON_FENCE), (8*2)+6, "Temps (en minutes)", VexiaHostConfig::getBorderReduce,
                 (hostConfig, value) -> hostConfig.setBorderReduce((int)value), ValueType.INTEGER),
         TIME_BEFORE_PVP("Temps avant le PvP", new String[]{"Définir un temps avant", "l'activation du PvP"},
-                new ItemStack(Material.DIAMOND_SWORD), (8*2)+6, "Temps (en minutes)", VexiaHostConfig::getTimeBeforePVP,
+                new ItemStack(Material.DIAMOND_SWORD), (8*2)+7, "Temps (en minutes)", VexiaHostConfig::getTimeBeforePVP,
                 (hostConfig, value) -> hostConfig.setTimeBeforePVP((int)value), ValueType.INTEGER),
         NETHER("Nether" , new String[]{"Définir la présence du", "nether ou non"},
                 new ItemStack(Material.NETHERRACK), (8*3)+4, "Status", VexiaHostConfig::isNether,

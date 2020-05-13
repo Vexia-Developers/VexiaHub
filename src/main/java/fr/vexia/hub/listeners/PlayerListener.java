@@ -41,7 +41,7 @@ public class PlayerListener implements Listener {
         VexiaHub.getInstance().getTags().put(player.getUniqueId(), team);
 
         FastBoard fastBoard = new FastBoard(player);
-        fastBoard.updateTitle("   §6§lVEXIA §r§lNETWORK   ");
+        fastBoard.updateTitle("§6§lVEXIA §r§lNETWORK");
         fastBoard.updateLines(
                 " ",
                 "§6Grade:",
@@ -55,7 +55,7 @@ public class PlayerListener implements Listener {
                 "§6Joueurs: §a" + VexiaHub.getInstance().getTotalOnline(),
                 "§6Lobby: §d#" + Bukkit.getMotd().substring(3),
                 "",
-                "§eplay.vexia.fr");
+                "§eplay.vexia.fr   ");
 
         if (account.getRank().getId() >= Rank.VX.getId()) {
             player.setAllowFlight(true);
