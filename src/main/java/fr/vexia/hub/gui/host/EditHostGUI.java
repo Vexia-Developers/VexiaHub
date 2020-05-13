@@ -55,7 +55,7 @@ public class EditHostGUI implements InventoryProvider {
                     contents.set(0, 0, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
-            ItemStack builder2 = new ItemBuilder(Material.STANDING_BANNER, 1, (short) 1).setName("§c-2").addPatterns(new Pattern(DyeColor.WHITE, PatternType.HALF_HORIZONTAL), new Pattern(DyeColor.ORANGE, PatternType.BORDER)).toItemStack();
+            ItemStack builder2 = new ItemBuilder(Material.BANNER, 1, (short) 1).setName("§c-2").addPatterns(new Pattern(DyeColor.WHITE, PatternType.HALF_HORIZONTAL), new Pattern(DyeColor.ORANGE, PatternType.BORDER)).toItemStack();
             contents.set(0, 1, ClickableItem.of(builder2, event -> {
                 int value = (int) configType.getter.apply(config);
                 if(value - 2 >= 0){
@@ -63,7 +63,7 @@ public class EditHostGUI implements InventoryProvider {
                     contents.set(0, 1, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
-            ItemStack builder3 = new ItemBuilder(Material.STANDING_BANNER, 1, (short) 4).setName("§c-1").addPatterns(new Pattern(DyeColor.WHITE, PatternType.HALF_HORIZONTAL), new Pattern(DyeColor.YELLOW, PatternType.BORDER)).toItemStack();
+            ItemStack builder3 = new ItemBuilder(Material.BANNER, 1, (short) 4).setName("§c-1").addPatterns(new Pattern(DyeColor.WHITE, PatternType.HALF_HORIZONTAL), new Pattern(DyeColor.YELLOW, PatternType.BORDER)).toItemStack();
             contents.set(0, 2, ClickableItem.of(builder3, event -> {
                 int value = (int) configType.getter.apply(config);
                 if(value - 1 >= 0){
@@ -71,7 +71,7 @@ public class EditHostGUI implements InventoryProvider {
                     contents.set(0, 2, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
-            ItemStack builder4 = new ItemBuilder(Material.STANDING_BANNER, 1, (short) 9).setName("§a+1").addPatterns(new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.CYAN, PatternType.BORDER),
+            ItemStack builder4 = new ItemBuilder(Material.BANNER, 1, (short) 9).setName("§a+1").addPatterns(new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.CYAN, PatternType.BORDER),
                     new Pattern(DyeColor.CYAN, PatternType.STRIPE_BOTTOM), new Pattern(DyeColor.CYAN, PatternType.STRIPE_TOP)).toItemStack();
             contents.set(0, 0, ClickableItem.of(builder4, event -> {
                 int value = (int) configType.getter.apply(config);
@@ -80,7 +80,7 @@ public class EditHostGUI implements InventoryProvider {
                     contents.set(0, 6, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
-            ItemStack builder5 = new ItemBuilder(Material.STANDING_BANNER, 1, (short) 5).setName("§a+2").addPatterns(new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.LIME, PatternType.BORDER),
+            ItemStack builder5 = new ItemBuilder(Material.BANNER, 1, (short) 5).setName("§a+2").addPatterns(new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.LIME, PatternType.BORDER),
                     new Pattern(DyeColor.LIME, PatternType.STRIPE_BOTTOM), new Pattern(DyeColor.LIME, PatternType.STRIPE_TOP)).toItemStack();
             contents.set(0, 0, ClickableItem.of(builder5, event -> {
                 int value = (int) configType.getter.apply(config);
@@ -89,7 +89,7 @@ public class EditHostGUI implements InventoryProvider {
                     contents.set(0, 7, ClickableItem.empty(configType.buildItem(config, false)));
                 }
             }));
-            ItemStack builder6 = new ItemBuilder(Material.STANDING_BANNER, 1, (short) 13).setName("§a+3").addPatterns(new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.GREEN, PatternType.BORDER),
+            ItemStack builder6 = new ItemBuilder(Material.BANNER, 1, (short) 13).setName("§a+3").addPatterns(new Pattern(DyeColor.WHITE, PatternType.STRAIGHT_CROSS), new Pattern(DyeColor.GREEN, PatternType.BORDER),
                     new Pattern(DyeColor.GREEN, PatternType.STRIPE_BOTTOM), new Pattern(DyeColor.GREEN, PatternType.STRIPE_TOP)).toItemStack();
             contents.set(0, 0, ClickableItem.of(builder6, event -> {
                 int value = (int) configType.getter.apply(config);
