@@ -157,9 +157,9 @@ public class ConfigHostGUI implements InventoryProvider {
 
     public enum ConfigType {
         PLAYER_SIZE("Nombre de joueurs maximum", new String[]{"Paramétrez le nombre", "de joueurs maximum"},
-                new ItemStack(Material.SKULL_ITEM, 1, (short) 3), 12, "Joueurs", VexiaHostConfig::getMaxPlayer, (hostConfig, value) -> hostConfig.setMaxPlayer((int)value), ValueType.INTEGER),
+                new ItemStack(Material.SKULL_ITEM, 1, (short) 3), (8*2)+3, "Joueurs", VexiaHostConfig::getMaxPlayer, (hostConfig, value) -> hostConfig.setMaxPlayer((int)value), ValueType.INTEGER),
         TEAMS("Nombre de joueurs par team", new String[]{"Choisir le nombre de", "joueurs maximum dans chaque", "teams"},
-                new ItemBuilder(Material.BANNER).setBanner(DyeColor.PURPLE).toItemStack(), (8*2)+4, "Equipes", VexiaHostConfig::getTeams,
+                new ItemBuilder(Material.BANNER).setBanner(DyeColor.PURPLE).toItemStack(), (8*2)+5, "Equipes", VexiaHostConfig::getTeams,
                 (hostConfig, value) -> hostConfig.setTeams((int)value), ValueType.INTEGER),
         BORDER_SIZE("Taille des bordure", new String[]{"Définir la taille des", "bordure au début de la partie"},
                 new ItemStack(Material.STAINED_GLASS, 1, (byte)5), (8*2)+1, "Taille (en blocks)", VexiaHostConfig::getBorderSize,
@@ -177,7 +177,7 @@ public class ConfigHostGUI implements InventoryProvider {
                 new ItemStack(Material.DIAMOND_SWORD), (8*3)+4, "Temps (en minutes)", VexiaHostConfig::getTimeBeforePVP,
                 (hostConfig, value) -> hostConfig.setTimeBeforePVP((int)value), ValueType.INTEGER),
         NETHER("Nether" , new String[]{"Définir la présence du", "nether ou non"},
-                new ItemStack(Material.NETHERRACK), (8*4)+4, "Status", VexiaHostConfig::isNether,
+                new ItemStack(Material.NETHERRACK), (8*3)+2, "Status", VexiaHostConfig::isNether,
                 (hostConfig, value) -> hostConfig.setNether((boolean) value), ValueType.BOOLEAN);
 
         String name;
