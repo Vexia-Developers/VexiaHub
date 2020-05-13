@@ -31,37 +31,44 @@ public class PlayerListener implements Listener {
         PlayerUtils.reset(player);
         giveItem(player, player.getInventory());
 
-        VexiaPlayer account = PlayerManager.get(player.getUniqueId());
-        String teamName = account.getRank().getTab() + "/" + account.getName().substring(0, 5) + "-" + account.getUUID().toString().substring(0, 5);
-        TeamsTagsManager team = new TeamsTagsManager(teamName,
-                account.getRank().getColoredPrefix() + " ", null,
-                Bukkit.getScoreboardManager().getMainScoreboard());
-        team.set(player);
-
-        VexiaHub.getInstance().getTags().put(player.getUniqueId(), team);
-
         FastBoard fastBoard = new FastBoard(player);
         fastBoard.updateTitle("§6§lVEXIA §r§lNETWORK");
         fastBoard.updateLines(
                 " ",
                 "§6Grade:",
-                " " + account.getRank().getColor() + account.getRank().getPrefix(),
+                " ",
                 " ",
                 "§6VXCoins:",
-                "    §e" + account.getCoins() + " ✪",
+                "    §e0 ✪",
                 "§6VXCrédits:",
-                "    §b" + account.getCredits() + " ⛃",
+                "    §b0 ⛃",
                 "",
                 "§6Joueurs: §a" + VexiaHub.getInstance().getTotalOnline(),
                 "§6Lobby: §d#" + Bukkit.getMotd().substring(3),
                 "",
                 "§eplay.vexia.fr   ");
-
-        if (account.getRank().getId() >= Rank.VX.getId()) {
-            player.setAllowFlight(true);
-        }
-
         VexiaHub.getInstance().getBoards().put(player.getUniqueId(), fastBoard);
+
+        Bukkit.getScheduler().runTaskAsynchronously(VexiaHub.getInstance(), () -> {
+            VexiaPlayer account = PlayerManager.get(player.getUniqueId());
+            if (account.getRank().getId() >= Rank.VX.getId()) {
+                player.setAllowFlight(true);
+            }
+
+            String teamName = account.getRank().getTab() + "/" + account.getName().substring(0, 5) + "-" + account.getUUID().toString().substring(0, 5);
+            fastBoard.updateLine(2, " " + account.getRank().getColor() + account.getRank().getPrefix());
+            fastBoard.updateLine(5, "    §e" + account.getCoins() + " ✪");
+            fastBoard.updateLine(7, "    §b" + account.getCredits() +" ⛃");
+
+            Bukkit.getScheduler().runTask(VexiaHub.getInstance(), () -> {
+                TeamsTagsManager team = new TeamsTagsManager(teamName,
+                        account.getRank().getColoredPrefix() + " ", null,
+                        Bukkit.getScoreboardManager().getMainScoreboard());
+                team.set(player);
+                VexiaHub.getInstance().getTags().put(player.getUniqueId(), team);
+            });
+
+        });
     }
 
     @EventHandler
