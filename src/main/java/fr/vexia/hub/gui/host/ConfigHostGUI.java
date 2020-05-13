@@ -165,7 +165,7 @@ public class ConfigHostGUI implements InventoryProvider {
                 new ItemStack(Material.STAINED_GLASS, 1, (byte)5), (8*2)+1, "Taille (en blocks)", VexiaHostConfig::getBorderSize,
                 (hostConfig, value) -> hostConfig.setBorderSize((int)value), ValueType.INTEGER),
         BORDER_END_SIZE("Taille des bordure de fin de partie", new String[]{"Définir la taille des", "bordure a la fin de la partie", "de la partie"},
-                new ItemStack(Material.STAINED_GLASS, 1, (byte)14), (8*3)+3, "Taille (en blocks)", VexiaHostConfig::getBorderEndSize,
+                new ItemStack(Material.STAINED_GLASS, 1, (byte)14), (8*3)+4, "Taille (en blocks)", VexiaHostConfig::getBorderEndSize,
                 (hostConfig, value) -> hostConfig.setBorderEndSize((int)value), ValueType.INTEGER),
         BORDER_SPEED("Vitesse des bordure", new String[]{"Définir la vitesse de", "déplacement des bordures"},
                 new ItemStack(Material.WATCH), (8*3)+2, "Vitesse (en blocks/s)", VexiaHostConfig::getBorderSpeed,
