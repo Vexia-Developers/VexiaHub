@@ -169,7 +169,7 @@ public class ConfigHostGUI implements InventoryProvider {
                 (hostConfig, value) -> hostConfig.setBorderEndSize((int)value), ValueType.INTEGER),
         BORDER_SPEED("Vitesse des bordure", new String[]{"Définir la vitesse de", "déplacement des bordures"},
                 new ItemStack(Material.WATCH), (8*3)+2, "Vitesse (en blocks/s)", VexiaHostConfig::getBorderSpeed,
-                (hostConfig, value) -> hostConfig.setBorderSpeed((int)value), ValueType.FLOAT),
+                (hostConfig, value) -> hostConfig.setBorderSpeed((float)value), ValueType.FLOAT),
         BORDER_REDUCE("Temps avant les borudre", new String[]{"Définir un temps avant", "que les bordures commence", "à rédure"},
                 new ItemStack(Material.IRON_FENCE), (8*2)+6, "Temps (en minutes)", VexiaHostConfig::getBorderReduce,
                 (hostConfig, value) -> hostConfig.setBorderReduce((int)value), ValueType.INTEGER),
@@ -220,7 +220,7 @@ public class ConfigHostGUI implements InventoryProvider {
 
         public ItemStack setMaxStackSize(ItemStack item, int amount) {
             net.minecraft.server.v1_12_R1.ItemStack otherItem = CraftItemStack.asNMSCopy(item);
-            otherItem.getItem().d(amount);
+            otherItem.setCount(amount);
             return CraftItemStack.asBukkitCopy(otherItem);
         }
 
