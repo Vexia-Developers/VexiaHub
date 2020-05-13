@@ -54,7 +54,7 @@ public class CreateHostGUI implements InventoryProvider {
         VexiaHostConfig config = new VexiaHostConfig();
         config.setOwnerUUID(player.getUniqueId());
         config.setServerName("instant");
-        ConfigHostGUI.getGUI(guiManager, config, ConfigHostGUI.ConfigStatus.CREATE_CONFIG).open(player);
+        ConfigHostGUI.getGUI(guiManager, config, ConfigHostGUI.ConfigStatus.SELECT_MODE).open(player);
     }
 
 

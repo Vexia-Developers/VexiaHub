@@ -63,7 +63,7 @@ public class ConfigHostGUI implements InventoryProvider {
                     event -> deleteConfig(player)));
         }
         if(status == ConfigStatus.EDIT_CONFIG || status == ConfigStatus.CREATE_CONFIG){
-            if(config.getServerName().equals("instant")){
+            if(config.getServerName() != null && config.getServerName().equals("instant")){
                 contents.set(5, 4, ClickableItem.of(new ItemBuilder(Material.SLIME_BALL).setName("§aCréer le serveur").setLore("§7avec la configuration que", "§7avez défini").toItemStack(),
                         event -> {
                             player.closeInventory();
